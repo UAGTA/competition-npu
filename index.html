@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Конкурс для молодшого складу НПУ</title>
+    <!-- Font Awesome для іконок -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Montserrat:wght@600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --deep-blue: #0a2463;
+            --medium-blue: #1e40af;
+            --light-blue: #3b82f6;
+            --accent-blue: #60a5fa;
+            --text-light: #f3f4f6;
+            --gradient-bg: linear-gradient(135deg, var(--deep-blue) 0%, var(--medium-blue) 50%, var(--light-blue) 100%);
+            --card-bg: rgba(255, 255, 255, 0.1);
+            --shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            color: var(--text-light);
+            background: var(--gradient-bg);
+            background-attachment: fixed;
+            background-size: cover;
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 0;
+        }
+
+        header {
+            text-align: center;
+            padding: 3rem 1rem;
+            animation: fadeIn 1.5s ease-out;
+        }
+
+        h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2.8rem;
+            margin-bottom: 1.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.8rem;
+            margin: 2rem 0 1rem;
+            color: var(--accent-blue);
+        }
+
+        p {
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .highlight {
+            font-weight: 700;
+            color: #ffd700; /* Gold color for emphasis */
+        }
+
+        /* Timer Styles */
+        #timer {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            padding: 2rem;
+            margin: 2rem auto;
+            text-align: center;
+            box-shadow: var(--shadow);
+            max-width: 700px;
+            animation: slideUp 1s ease-out;
+        }
+
+        .timer-container {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .timer-unit {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            padding: 1.2rem;
+            min-width: 110px;
+        }
+
+        .timer-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .timer-label {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 0.5rem;
+        }
+
+        /* Content Sections */
+        .content-section {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            padding: 2.5rem;
+            margin: 3rem auto;
+            box-shadow: var(--shadow);
+            animation: fadeIn 2s ease-out;
+        }
+
+        .prizes-list {
+            list-style: none;
+            margin: 1.5rem 0;
+        }
+
+        .prizes-list li {
+            margin-bottom: 0.8rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .prizes-list li:before {
+            content: "•";
+            color: var(--accent-blue);
+            font-weight: bold;
+            display: inline-block;
+            width: 1em;
+            margin-left: -1em;
+            font-size: 1.2rem;
+        }
+
+        /* Button Styles */
+        .buttons-container {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            margin: 3rem 0;
+        }
+
+        .cta-button {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 600;
+            padding: 1.2rem 2.5rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: linear-gradient(145deg, var(--light-blue), var(--medium-blue));
+            color: white;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .cta-button:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 100%;
+            background: linear-gradient(145deg, var(--medium-blue), var(--deep-blue));
+            transition: all 0.5s ease;
+            z-index: -1;
+        }
+
+        .cta-button:hover:before {
+            width: 100%;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        .cta-button:active {
+            transform: translateY(1px);
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        .modal-content {
+            background: var(--gradient-bg);
+            margin: 5% auto;
+            padding: 2.5rem;
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+            width: 90%;
+            max-width: 600px;
+            position: relative;
+            animation: slideUp 0.5s ease-out;
+        }
+
+        .close-button {
+            color: #aaa;
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .close-button:hover {
+            color: var(--text-light);
+        }
+
+        /* Form Styles */
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: none;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            color: var(--text-light);
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        .form-control:focus {
+            outline: none;
+            background: rgba(255, 255, 255, 0.25);
+            box-shadow: 0 0 0 2px var(--accent-blue);
+        }
+
+        .form-submit {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(145deg, var(--light-blue), var(--medium-blue));
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 1rem;
+        }
+
+        .form-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Points Table */
+        .points-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .points-table th, .points-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .points-table th {
+            background: rgba(0, 0, 0, 0.4);
+            font-weight: 600;
+        }
+
+        .points-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .points-table tr:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        /* Sponsor Section */
+        .sponsor-note {
+            text-align: center;
+            margin-top: 3rem;
+            padding: 1.5rem;
+            font-size: 0.9rem;
+            opacity: 0.8;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            h1 { font-size: 2.2rem; }
+            h2 { font-size: 1.6rem; }
+            
+            .timer-unit {
+                min-width: 80px;
+                padding: 1rem;
+            }
+            
+            .timer-value {
+                font-size: 2rem;
+            }
+            
+            .buttons-container {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .content-section {
+                padding: 1.5rem;
+            }
+            
+            .points-table {
+                font-size: 0.9rem;
+            }
+            
+            .points-table th, .points-table td {
+                padding: 0.7rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>КОНКУРС ДЛЯ МОЛОДШОГО СКЛАДУ НАЦІОНАЛЬНОЇ ПОЛІЦІЇ УКРАЇНИ</h1>
+            <p>З <span class="highlight">26.08.2025</span> по <span class="highlight">02.09.2025</span> буде проходити конкурс серед молодшого складу.</p>
+            <p>Ваше завдання – показати себе у роботі, набрати якомога більше балів за виконані завдання та довести, що саме ви заслуговуєте на перемогу.</p>
+        </header>
+
+        <!-- Timer Section -->
+        <section id="timer">
+            <h2>До кінця конкурсу залишилось:</h2>
+            <div class="timer-container">
+                <div class="timer-unit">
+                    <div id="days" class="timer-value">00</div>
+                    <div class="timer-label">Днів</div>
+                </div>
+                <div class="timer-unit">
+                    <div id="hours" class="timer-value">00</div>
+                    <div class="timer-label">Годин</div>
+                </div>
+                <div class="timer-unit">
+                    <div id="minutes" class="timer-value">00</div>
+                    <div class="timer-label">Хвилин</div>
+                </div>
+                <div class="timer-unit">
+                    <div id="seconds" class="timer-value">00</div>
+                    <div class="timer-label">Секунд</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Buttons Section -->
+        <div class="buttons-container">
+            <button id="participateBtn" class="cta-button"><i class="fas fa-trophy"></i> Прийняти участь в розіграші</button>
+            <button id="addPointsBtn" class="cta-button"><i class="fas fa-star"></i> Поповнити свою кількість балів</button>
+        </div>
+
+        <!-- Prizes Section -->
+        <section class="content-section">
+            <h2>Призові місця та нагороди:</h2>
+            <ul class="prizes-list">
+                <li><span class="highlight">1 місце</span> – секретний автомобіль</li>
+                <li><span class="highlight">2 місце</span> – унікальний скін</li>
+                <li><span class="highlight">3 місце</span> – цінний аксесуар</li>
+                <li><span class="highlight">4 місце</span> – 500.000 грн</li>
+                <li><span class="highlight">5 місце</span> – 500.000 грн</li>
+                <li><span class="highlight">6 місце</span> – 500.000 грн</li>
+            </ul>
+        </section>
+
+        <!-- Points System Section -->
+        <section class="content-section">
+            <h2>Система нарахування балів</h2>
+            <table class="points-table">
+                <thead>
+                    <tr>
+                        <th>Завдання</th>
+                        <th>Балів</th>
+                        <th>Примітка</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>Патруль 30 хв після 21:00 до 09:00</td><td>4</td><td>Для всіх 4-11, при наявності доповіді</td></tr>
+                    <tr><td>Патруль 30 хв з 09:00 до 21:00</td><td>2</td><td>Для всіх 4-11, при наявності доповіді</td></tr>
+                    <tr><td>Орієнтування із затриманням (КОРД)</td><td>5</td><td></td></tr>
+                    <tr><td>Кримінальне провадження (ГСУ)</td><td>50</td><td></td></tr>
+                    <tr><td>Один затриманий, посаджений до ІТТ (ПП, ГСУ)</td><td>2</td><td></td></tr>
+                    <tr><td>Виписаний штраф (ПП)</td><td>1</td><td>1 людина = 1 штраф</td></tr>
+                    <tr><td>Проведення РП-ситуації (4+ скріншота, 8-11)</td><td>5</td><td></td></tr>
+                    <tr><td>ГРП-ситуація (мінімум 5 учасників)</td><td>15</td><td>Кожному присутньому</td></tr>
+                    <tr><td>Допомога на наборі / конвої ДКВС</td><td>2</td><td>Для 4-11, при наявності доповіді</td></tr>
+                    <tr><td>Проведення набору в НПУ</td><td>2</td><td>Для 11</td></tr>
+                    <tr><td>Взаємодія з іншими фракціями</td><td>2</td><td>РП, БП, ПП, тренування тощо</td></tr>
+                    <tr><td>3 години поспіль в грі за добу</td><td>5</td><td>Скріни трьох PayDay</td></tr>
+                    <tr><td>Виконане РП-завдання (8-12 звання)</td><td>3</td><td>Мінімум 3 рядки кожної команди: /do /me /try</td></tr>
+                    <tr><td>Присутність на лекції, РП-ситуації, тренуванні</td><td>2</td><td>Скріни початку та закінчення</td></tr>
+                    <tr><td>Проведення лекції, тренування, іспитів</td><td>3</td><td>Для інструкторів НАВС та 8-11</td></tr>
+                    <tr><td>Агітація до НПУ К</td><td>3</td><td>Скріни початку/кінця, +1 бал за кожного приведеного</td></tr>
+                    <tr><td>Успішне відбиття нападу на ВЧ</td><td>5</td><td>Скріни подяки від ЗСУ або доповіді</td></tr>
+                    <tr><td>Охорона ВЧ 00:00–02:00</td><td>30</td><td>Рахується за доповіді кожних 30 хв</td></tr>
+                    <tr><td>Проведення блок-постів/патрульних постів (10–11)</td><td>5</td><td></td></tr>
+                    <tr><td>Евакуація авто</td><td>1</td><td>Скріни НЗ та штрафмайданчик</td></tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Additional Info Section -->
+        <section class="content-section">
+            <h2><i class="fas fa-exclamation-triangle"></i> УВАГА!</h2>
+            <p>Виконану роботу потрібно подати на форум у відповідну тему.</p>
+            <p>Додатково ми пізніше відправимо спеціальну форму для реєстрації та підтвердження участі.</p>
+            
+            <p class="highlight">Пам'ятайте: цей конкурс – це не лише шанс отримати приз, а й можливість проявити себе, показати дисципліну, відданість службі та бажання розвиватися.</p>
+            <p class="highlight">Тільки наполегливі, відповідальні та мотивовані зможуть дійти до кінця та здобути нагороду.</p>
+            <p class="highlight">Дійте, проявляйте ініціативу, виконуйте роботу на максимум – і перемога буде за вами!</p>
+        </section>
+
+        <!-- Sponsor Note -->
+        <div class="sponsor-note">
+            <p>Спонсор конкурсу: Руслан Містер. Висловлюємо вам вдячність!</p>
+        </div>
+    </div>
+
+    <!-- Participation Modal -->
+    <div id="participateModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h2>Форма участі в конкурсі</h2>
+            <form id="participateForm">
+                <div class="form-group">
+                    <label for="nickname">Ігровий нікнейм</label>
+                    <input type="text" id="nickname" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="rank">Ваше звання</label>
+                    <select id="rank" class="form-control" required>
+                        <option value="">Оберіть звання</option>
+                        <option value="4">4 - Поліцейський</option>
+                        <option value="5">5 - Старший поліцейський</option>
+                        <option value="6">6 - Сержант</option>
+                        <option value="7">7 - Старший сержант</option>
+                        <option value="8">8 - Молодший лейтенант</option>
+                        <option value="9">9 - Лейтенант</option>
+                        <option value="10">10 - Старший лейтенант</option>
+                        <option value="11">11 - Капітан</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="telegram">Контактний Telegram</label>
+                    <input type="text" id="telegram" class="form-control" placeholder="@username" required>
+                </div>
+                <div class="form-group">
+                    <label>
+                        <input type="checkbox" required> Підтверджую згоду з умовами конкурсу
+                    </label>
+                </div>
+                <button type="submit" class="form-submit">Відправити заявку</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Add Points Modal -->
+    <div id="addPointsModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h2>Форма нарахування балів</h2>
+            <form id="addPointsForm">
+                <div class="form-group">
+                    <label for="pointsNickname">Ігровий нікнейм</label>
+                    <input type="text" id="pointsNickname" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="task">Завдання, яке виконане</label>
+                    <input type="text" id="task" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="proof">Доказ виконання (посилання на скріншот/відео/тему на форумі)</label>
+                    <input type="url" id="proof" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="points">Кількість балів, яку просите зарахувати</label>
+                    <input type="number" id="points" class="form-control" min="1" required>
+                </div>
+                <button type="submit" class="form-submit">Надіслати на перевірку</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Timer functionality
+        function updateTimer() {
+            const endDate = new Date('September 2, 2025 23:59:59').getTime();
+            const now = new Date().getTime();
+            const distance = endDate - now;
+            
+            if (distance < 0) {
+                document.getElementById('days').innerText = '00';
+                document.getElementById('hours').innerText = '00';
+                document.getElementById('minutes').innerText = '00';
+                document.getElementById('seconds').innerText = '00';
+                return;
+            }
+            
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+            
+            document.getElementById('days').innerText = days.toString().padStart(2, '0');
+            document.getElementById('hours').innerText = hours.toString().padStart(2, '0');
+            document.getElementById('minutes').innerText = minutes.toString().padStart(2, '0');
+            document.getElementById('seconds').innerText = seconds.toString().padStart(2, '0');
+        }
+        
+        setInterval(updateTimer, 1000);
+        updateTimer();
+        
+        // Modal functionality
+        const participateBtn = document.getElementById('participateBtn');
+        const addPointsBtn = document.getElementById('addPointsBtn');
+        const participateModal = document.getElementById('participateModal');
+        const addPointsModal = document.getElementById('addPointsModal');
+        const closeButtons = document.querySelectorAll('.close-button');
+        
+        participateBtn.addEventListener('click', () => {
+            participateModal.style.display = 'block';
+        });
+        
+        addPointsBtn.addEventListener('click', () => {
+            addPointsModal.style.display = 'block';
+        });
+        
+        closeButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                participateModal.style.display = 'none';
+                addPointsModal.style.display = 'none';
+            });
+        });
+        
+        window.addEventListener('click', (event) => {
+            if (event.target === participateModal) {
+                participateModal.style.display = 'none';
+            }
+            if (event.target === addPointsModal) {
+                addPointsModal.style.display = 'none';
+            }
+        });
+        
+        // Form submission (example - you'll need to implement GitHub API integration)
+        document.getElementById('participateForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Форму участі успішно відправлено! Це демо-версія. У реальному застосунку дані будуть відправлені на GitHub.');
+            this.reset();
+            participateModal.style.display = 'none';
+        });
+        
+        document.getElementById('addPointsForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Запит на нарахування балів успішно відправлено! Це демо-версія. У реальному застосунку дані будуть відправлені на GitHub.');
+            this.reset();
+            addPointsModal.style.display = 'none';
+        });
+        
+        // Scroll animations
+        document.addEventListener('DOMContentLoaded', function() {
+            const animatedElements = document.querySelectorAll('.content-section, #timer');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.animation = 'slideUp 1s ease-out forwards';
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            animatedElements.forEach(element => {
+                observer.observe(element);
+            });
+        });
+    </script>
+</body>
+</html>
